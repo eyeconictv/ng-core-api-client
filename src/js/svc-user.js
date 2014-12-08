@@ -15,22 +15,26 @@
   })
 
   .factory("getUserProfile", ["oauth2APILoader", "coreAPILoader", "$q", "$log",
-  "getOAuthUserInfo",
-  function (oauth2APILoader, coreAPILoader, $q, $log, getOAuthUserInfo) {
+  function (oauth2APILoader, coreAPILoader, $q, $log) {
     var _username;
-    var _deferred = null;
+    var _cachedPromises = {};
+
     return function (username, clearCache) {
 
-      if (username === _username && !clearCache && _deferred !== null) {
+      var deferred;
+
+      if (username === _username && !clearCache &&
+        _cachedPromises[username] !== null) {
         //avoid calling API if username didn't change
-        return _deferred.promise;
+        return _cachedPromises[username].promise;
+      }
+      else {
+        _username = username;
+        _cachedPromises[username] = deferred = $q.defer();
       }
 
-      _username = username;
-      _deferred = $q.defer();
-
       if(!username) {
-        _deferred.reject("getUserProfile failed: username param is required.");
+        deferred.reject("getUserProfile failed: username param is required.");
         $log.debug("getUserProfile failed: username param is required.");
       }
       else {
@@ -44,17 +48,17 @@
           // var oauthUserInfo = results[2];
           coreApi.user.get(criteria).execute(function (resp){
             if (resp.error || !resp.result) {
-              _deferred.reject(resp);
+              deferred.reject(resp);
             }
             else {
               $log.debug("getUser resp", resp);
                 //get user profile
-              _deferred.resolve(resp.item);
+                deferred.resolve(resp.item);
             }
           });
-        }, _deferred.reject);
+        }, deferred.reject);
       }
-      return _deferred.promise;
+      return deferred.promise;
     };
   }])
 
