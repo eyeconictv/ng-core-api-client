@@ -21,16 +21,18 @@ function ($q, $http, $document, $timeout, GSFP_URL, $log) {
   return function (username, email) {
     var deferred = $q.defer();
     $log.debug("loadFastpass called", username, email);
+    var rejected = function (rej) {
+      $log.error("loadFastpass rejected", rej);
+      deferred.reject("loadFastpass rejected " + rej);
+    };
+
     $http.get(GSFP_URL +
       "/geturl?userEmail=" + email +
       "&userName=" + username).then(function (res){
         loadScript(res.data).then(function (result) {
           $log.debug("loadFastpass result", result);
           deferred.resolve(true);
-        }).catch(function (rej) {
-          $log.error("loadFastpass rejected", rej);
-          deferred.reject("loadFastpass rejected " + rej);
-        });
+        },rejected).catch(rejected);
       }, deferred.reject);
 
       return deferred.promise;
