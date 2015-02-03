@@ -17,13 +17,13 @@ angular.module("risevision.common.app",
             $log.debug("listApps called", companyId);
 
             var deferred = $q.defer();
-            riseAPILoader().then(function (coreApi) {
+            riseAPILoader().then(function (riseApi) {
                 var criteria = {};
                 if (companyId) {
                     criteria.companyId = companyId;
                 }
 
-                var request = coreApi.app.list(criteria);
+                var request = riseApi.app.list(criteria);
                 request.execute(function (resp) {
                     $log.debug("listApps resp", resp);
                     if (resp.result) {
@@ -44,13 +44,13 @@ angular.module("risevision.common.app",
             $log.debug("getApp called", id);
 
             var deferred = $q.defer();
-            riseAPILoader().then(function (coreApi) {
+            riseAPILoader().then(function (riseApi) {
                 var criteria = {};
                 if (id) {
                     criteria.id = id;
                 }
 
-                var request = coreApi.app.get(criteria);
+                var request = riseApi.app.get(criteria);
                 request.execute(function (resp) {
                     $log.debug("getApp resp", resp);
                     if (resp.result) {
@@ -70,9 +70,9 @@ angular.module("risevision.common.app",
             $log.debug("createApp called", companyId, userId, app);
 
             var deferred = $q.defer();
-            riseAPILoader().then(function (coreApi) {
+            riseAPILoader().then(function (riseApi) {
                 var fields = pick.apply(this, [app].concat(APP_WRITABLE_FIELDS));
-                var request = coreApi.app.add({
+                var request = riseApi.app.add({
                     companyId: companyId,
                     userId: userId,
                     data: JSON.stringify(fields)
@@ -96,9 +96,9 @@ angular.module("risevision.common.app",
             $log.debug("updateApp called", id, app);
 
             var deferred = $q.defer();
-            riseAPILoader().then(function (coreApi) {
+            riseAPILoader().then(function (riseApi) {
                 var fields = pick.apply(this, [app].concat(APP_WRITABLE_FIELDS));
-                var request = coreApi.app.update({
+                var request = riseApi.app.update({
                     id: id,
                     data: JSON.stringify(fields)
                 });
@@ -121,12 +121,12 @@ angular.module("risevision.common.app",
             $log.debug("deleteApp called", id);
 
             var deferred = $q.defer();
-            riseAPILoader().then(function (coreApi) {
+            riseAPILoader().then(function (riseApi) {
                 var criteria = {};
                 if(id) {
                     criteria.id = id;
                 }
-                var request = coreApi.app.delete(criteria);
+                var request = riseApi.app.delete(criteria);
                 request.execute(function (resp) {
                     $log.debug("deleteApp resp", resp);
                     if(resp.result) {

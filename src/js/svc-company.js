@@ -12,7 +12,7 @@
     .constant("COMPANY_WRITABLE_FIELDS", [
       "name", "street", "unit", "city", "province", "country",
       "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
-      "notificationEmails", "mailSyncEnabled", "sellerId"
+      "notificationEmails", "mailSyncEnabled", "sellerId", "isTest"
     ])
 
     .factory("createCompany", ["$q", "coreAPILoader", "COMPANY_WRITABLE_FIELDS",
@@ -24,7 +24,7 @@
           var fields = pick.apply(this, [company].concat(COMPANY_WRITABLE_FIELDS));
           var request = coreApi.company.add({
             parentId: parentCompanyId,
-            data: JSON.stringify(fields)
+            data: fields
           });
           request.execute(function (resp) {
             if(resp.result) {
@@ -114,7 +114,7 @@
           $log.debug("updateCompany called", companyId, fields);
           // fields.validate = validationRequired || false;
           coreAPILoader().then(function (coreApi) {
-            var request = coreApi.company.update({id: companyId, data: JSON.stringify(fields)});
+            var request = coreApi.company.patch({id: companyId, data: fields});
             request.execute(function (resp) {
               $log.debug("updateCompany resp", resp);
               if(resp.result) {
