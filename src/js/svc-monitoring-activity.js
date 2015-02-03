@@ -31,6 +31,9 @@ angular.module("risevision.common.monitoring.activity",
                         deferred.reject(resp);
                     }
                 });
+            }, function (errorResult) {
+                $log.debug("Error: " + errorResult);
+                deferred.reject(errorResult);
             });
             return deferred.promise;
         }
