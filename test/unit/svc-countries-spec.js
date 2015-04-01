@@ -14,7 +14,63 @@ describe("Services: Countries Core API Service", function() {
               setTimeout(function () {
                 def.resolve({
                   result: {
-                    items: []
+                    items: [
+                      {
+                       "code": "US",
+                       "name": "United States",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "EG",
+                       "name": "Egypt",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "GB",
+                       "name": "United Kingdom",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "FR",
+                       "name": "France",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "GR",
+                       "name": "Greece",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "RO",
+                       "name": "Romania",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "AT",
+                       "name": "Austria",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "PT",
+                       "name": "Portugal",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "BR",
+                       "name": "Brazil",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "CA",
+                       "name": "Canada",
+                       "kind": "core#countryItem"
+                      },
+                      {
+                       "code": "TR",
+                       "name": "Turkey",
+                       "kind": "core#countryItem"
+                      }
+                    ]
                   }
                 });
               }, 0);
@@ -51,6 +107,16 @@ describe("Services: Countries Core API Service", function() {
       .then(function(result){
         expect(result).to.be.truely;
         expect(result).to.be.an.array;
+        done();
+      })
+      .then(null,done);
+    });
+    
+    it("should order by name",function(done){
+      getCoreCountries()
+      .then(function(result){
+        expect(result[0].name).to.equal("Austria");
+        expect(result[result.length - 1].name).to.equal("United States");
         done();
       })
       .then(null,done);
