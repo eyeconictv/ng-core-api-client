@@ -195,21 +195,4 @@ describe("Services: Company Core API Service", function() {
     });
   });
 
-  describe("validateAddressSimple", function() {
-    it("should find errors with an empty address", function () {
-      var errors = companyService.validateAddressSimple(
-        window.rvFixtures.emptyCompanyAddress);
-      expect(errors).to.include("Missing Address (Line 1)");
-      expect(errors).to.include("Missing City");
-      expect(errors).to.include("Missing Country");
-      expect(errors).to.include("Missing State / Province");
-      expect(errors).to.include("Missing Zip / Postal Code");
-    });
-    it("should NOT find errors with a valid address", function () {
-      var errors = companyService.validateAddressSimple(window.rvFixtures.validCompanyAddress);
-      expect(errors.length).to.equal(0);
-    });
-
-  });
-
 });
