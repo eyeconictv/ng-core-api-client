@@ -12,9 +12,9 @@
     .constant("COMPANY_WRITABLE_FIELDS", [
       "name", "street", "unit", "city", "province", "country",
       "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
-      "notificationEmails", "mailSyncEnabled", "sellerId", "isTest",
-      "shipToUseCompanyAddress", "shipToName", "shipToStreet", "shipToUnit",
-      "shipToCity", "shipToProvince", "shipToPostalCode", "shipToCountry"
+      "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress", 
+      "shipToName", "shipToStreet", "shipToUnit", "shipToCity", 
+      "shipToProvince", "shipToPostalCode", "shipToCountry"
     ])
     .constant("COMPANY_SEARCH_FIELDS", [
       "name", "id", "street", "unit", "city", "province", "country",
