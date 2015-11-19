@@ -38,6 +38,25 @@ describe("Services: Company Core API Service", function() {
                 }
               };
             },
+            patch: function(obj) {
+              expect(obj).to.be.ok;
+              expect(obj.id).to.equal('companyId');
+              expect(obj.data).to.be.ok;
+              
+              var def = Q.defer();
+              if (obj.data.alertSettings) {
+                expect(obj.data).to.have.property("alertSettings");
+                
+                def.resolve({
+                  result: {
+                    item: obj.data
+                  }
+                });
+              } else {
+                def.reject("API Failed");
+              }
+              return def.promise;
+            },
             updateAddress: function () {
               return {
                 execute: function (callback) {
@@ -56,6 +75,75 @@ describe("Services: Company Core API Service", function() {
     $provide.value("CORE_URL", "");
   }));
   
+  // New service format:
+  describe('company service: ', function() {
+    var company;
+    
+    beforeEach(function() {
+      inject(function($injector){
+        company = $injector.get("company");
+      });      
+    });
+
+    it("should exist", function() {
+      expect(company).be.defined;
+      expect(company.updateAlerts).be.defined;
+    });
+
+    describe('updateAlerts:',function(){
+      var alertSettings;
+      
+      beforeEach(function() {
+        alertSettings = {
+          id: 'companyId',
+          alertSettings: {
+            enabled: true
+          }
+        };
+        
+      });
+      
+      it('should update alerts',function(done){
+        company.updateAlerts(alertSettings.id, alertSettings)
+        .then(function(result){
+          expect(result).to.be.ok;
+          expect(result.item).to.be.ok;
+          expect(result.item).to.have.property("alertSettings");
+          
+          done();
+        })
+        .then(null,done);
+      });
+      
+      it('should remove extra properties',function(done){
+        company.updateAlerts(alertSettings.id, alertSettings)
+        .then(function(result){
+          expect(result).to.be.ok;
+          expect(result.item).to.be.ok;
+          expect(result.item).to.not.have.property("id");
+          
+          done();
+        })
+        .then(null,done);
+      });
+      
+      it("should handle failure to update alerts",function(done){
+        company.updateAlerts(alertSettings.id, {})
+        .then(function(result) {
+          done(result);
+        })
+        .then(null, function(error) {
+          expect(error).to.deep.equal('API Failed');
+          done();
+        })
+        .then(null,done);
+      });
+    });
+  });
+
+  
+  
+  // Old services:
   var companyService;
   
   beforeEach(function() {

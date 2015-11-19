@@ -16,12 +16,51 @@
       "shipToName", "shipToStreet", "shipToUnit", "shipToCity", 
       "shipToProvince", "shipToPostalCode", "shipToCountry"
     ])
+    .constant("ALERTS_WRITABLE_FIELDS", [
+      "alertSettings"
+    ])
     .constant("COMPANY_SEARCH_FIELDS", [
       "name", "id", "street", "unit", "city", "province", "country",
       "postalCode", "telephone", "fax",
       "shipToName", "shipToStreet", "shipToCity", "shipToPostalCode"
     ])
+    
+    // New service format:
+    .factory("company", ["$q", "$log", "coreAPILoader", "pick",
+      "ALERTS_WRITABLE_FIELDS",
+      function ($q, $log, coreAPILoader, pick, ALERTS_WRITABLE_FIELDS) {
+        var service = {
+          updateAlerts: function (companyId, company) {
+            var deferred = $q.defer();
+            var fields = pick.apply(this, [company].concat(
+              ALERTS_WRITABLE_FIELDS));
+            var obj = {
+              "id": companyId,
+              "data": fields
+            };
+            $log.debug("updateAlerts called", companyId, fields);
 
+            coreAPILoader().then(function (coreApi) {
+                return coreApi.company.patch(obj);
+              })
+              .then(function (resp) {
+                $log.debug("update Alerts resp", resp);
+                deferred.resolve(resp.result);
+              })
+              .then(null, function (e) {
+                $log.error("Failed to update Alerts.", e);
+                deferred.reject(e);
+              });
+
+            return deferred.promise;
+          }
+        };
+          
+        return service;
+      }
+    ])
+
+    // Old services:
     .factory("createCompany", ["$q", "coreAPILoader", "COMPANY_WRITABLE_FIELDS",
       "pick",
       function ($q, coreAPILoader, COMPANY_WRITABLE_FIELDS, pick) {
