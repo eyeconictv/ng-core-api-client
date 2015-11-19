@@ -281,42 +281,6 @@
           return deferred.promise;
       };
 
-      this.validateAddressSimple = function(company, contact) {
-        var errors = [];
-        if (contact) {
-            if (!contact.firstName) {
-                errors.push("Missing First Name");
-            }
-            if (!contact.lastName) {
-                errors.push("Missing Last Name");
-            }
-            if (!contact.email) {
-                errors.push("Missing Email");
-            } else {
-                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if (!re.test(contact.email)) {
-                    errors.push("Invalid Email");
-                }
-            }
-        }
-        if (!company.street) {
-            errors.push("Missing Address (Line 1)");
-        }
-        if (!company.city) {
-            errors.push("Missing City");
-        }
-        if (!company.country) {
-            errors.push("Missing Country");
-        }
-        if (!company.province) {
-            errors.push("Missing State / Province");
-        }
-        if (!company.postalCode) {
-            errors.push("Missing Zip / Postal Code");
-        }
-        return errors;
-      };
-
     }])
 
   .filter("fullAddress", function () {
