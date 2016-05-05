@@ -90,8 +90,8 @@
     };
   }])
 
-  .factory("addUser", ["$q", "coreAPILoader", "$log", "pick",
-  function ($q, coreAPILoader, $log, pick) {
+  .factory("addUser", ["$q", "coreAPILoader", "$log", "pick", "getUserProfile",
+  function ($q, coreAPILoader, $log, pick, getUserProfile) {
     return function (companyId, username, profile) {
       var deferred = $q.defer();
       coreAPILoader().then(function (coreApi) {
@@ -104,7 +104,7 @@
         request.execute(function (resp) {
           $log.debug("addUser resp", resp);
           if(resp.result) {
-            deferred.resolve(resp);
+            getUserProfile(username, true).then(function() {deferred.resolve(resp);});
           }
           else {
             deferred.reject(resp);
