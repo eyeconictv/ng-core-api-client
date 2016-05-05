@@ -6,6 +6,7 @@ describe("User Profile: getUserProfile", function() {
   var alfredo = {"username": "Alfredo Sanchez"};
 
   beforeEach(module("risevision.core.userprofile"));
+  beforeEach(module("risevision.core.util"));
   beforeEach(module(function ($provide) {
     //stub services
     $provide.service("$q", function() {return Q;});
@@ -19,6 +20,15 @@ describe("User Profile: getUserProfile", function() {
               execute: function (callback) {
                 setTimeout(function () {
                   callback({result: true, item: angular.copy(alfredo)});
+                }, 0);
+              }
+            };
+          },
+          add: function(obj) {
+            return {
+              execute: function (callback) {
+                setTimeout(function () {
+                  callback({result: true});
                 }, 0);
               }
             };
@@ -53,7 +63,7 @@ describe("User Profile: getUserProfile", function() {
     });
   });
 
-  it("should handle multiple simutaneous calls", function(done) {
+  it("should handle multiple simultaneous calls", function(done) {
     inject(function (getUserProfile, $q) {
       $q.all([getUserProfile("someusername"),
       getUserProfile("someusername1"),
@@ -62,6 +72,29 @@ describe("User Profile: getUserProfile", function() {
         expect(results).to.deep.equal([alfredo, alfredo, alfredo, alfredo]);
         done();
       }, done);
+    });
+  });
+
+  describe("addUser",function(){
+    var clearGetUserProfileCacheUsername, clearGetUserProfileCache;
+    beforeEach(module(function ($provide) {
+      $provide.value("getUserProfile", function(username,clear) {
+        clearGetUserProfileCacheUsername = username;
+        clearGetUserProfileCache = clear;
+        var deffered = Q.defer();
+        deffered.resolve({});
+        return deffered.promise;
+      });
+    }));
+
+    it("should clear getUserProfile cache for the username on success",function(done){
+      inject(function (addUser) {
+        addUser('companyId', 'myUsername', {}).then(function(){
+          expect(clearGetUserProfileCacheUsername).to.equal("myUsername");
+          expect(clearGetUserProfileCache).to.be.true;          
+          done();
+        });
+      });      
     });
   });
 
