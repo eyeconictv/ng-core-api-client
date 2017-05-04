@@ -14,7 +14,7 @@
       "postalCode", "timeZoneOffset", "telephone", "fax", "companyStatus",
       "mailSyncEnabled", "sellerId", "isTest", "shipToUseCompanyAddress", 
       "shipToName", "shipToStreet", "shipToUnit", "shipToCity", 
-      "shipToProvince", "shipToPostalCode", "shipToCountry"
+      "shipToProvince", "shipToPostalCode", "shipToCountry", "website"
     ])
     .constant("ALERTS_WRITABLE_FIELDS", [
       "alertSettings"

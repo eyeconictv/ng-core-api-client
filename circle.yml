@@ -1,5 +1,11 @@
----
-# Custom dependencies
+machine:
+  node:
+    version: 5.0.0
 dependencies:
   post:
+    - bower cache clean
     - bower install
+test:
+  override:
+    - echo $CHROME_INSTANCES
+    - XUNIT_FILE=$CIRCLE_TEST_REPORTS/angular-xunit.xml PROSHOT_DIR=$CIRCLE_TEST_REPORTS/screenshots npm test
