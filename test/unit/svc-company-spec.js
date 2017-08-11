@@ -163,6 +163,14 @@ describe("Services: Company Core API Service", function() {
         done();
       })
     });
+
+    it("should get companies regardless of additional Array fields", function (done) {
+      Array.prototype.contains = function(){};
+      companyService.getCompanies("some_id", "s").then(function (result) {
+        expect(result).to.deep.equal(rvFixtures.companiesResp);
+        done();
+      })
+    });
   });
 
   xdescribe("getSubCompanies", function () {
