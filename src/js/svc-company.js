@@ -233,7 +233,7 @@
       var createSearchQuery = function(fields, search) {
         var query = "";
         
-        for (var i in fields) {
+        for (var i=0; i<fields.length;i++) {
           query += "OR " + fields[i] + ":~\'" + search + "\' ";
         }
         
