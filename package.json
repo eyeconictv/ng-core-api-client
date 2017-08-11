@@ -1,6 +1,6 @@
 {
   "name": "ng-core-api-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Client JS library module for Rise Vision Core API, Angular style.",
   "main": "index.js",
   "scripts": {
