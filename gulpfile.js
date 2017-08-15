@@ -36,3 +36,9 @@ gulp.task("lint", function() {
 gulp.task("test", ["lint"], function (cb) {
   runSequence("test:unit", "metrics", cb);
 });
+
+gulp.task("bump", function(){
+  gulp.src(["./bower.json", "./package.json"])
+  .pipe(require("gulp-bump")({type: "patch"}))
+  .pipe(gulp.dest("./"));
+});
