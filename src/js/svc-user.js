@@ -13,6 +13,11 @@
     "sa": "Rise System Administrator",
     "ba": "Rise Store Administrator"
   })
+  
+  .constant("USER_WRITABLE_FIELDS", [
+    "mailSyncEnabled", "email", "firstName", "lastName", "telephone", "roles", 
+    "status", "companyRole", "dataCollectionDate"
+  ])
 
   .factory("getUserProfile", ["oauth2APILoader", "coreAPILoader", "$q", "$log",
   function (oauth2APILoader, coreAPILoader, $q, $log) {
@@ -63,12 +68,12 @@
   }])
 
   .factory("updateUser", ["$q", "coreAPILoader", "$log",
-  "getUserProfile", "pick",
-  function ($q, coreAPILoader, $log, getUserProfile, pick) {
+  "getUserProfile", "pick", "USER_WRITABLE_FIELDS",
+  function ($q, coreAPILoader, $log, getUserProfile, pick, 
+    USER_WRITABLE_FIELDS) {
     return function (username, profile) {
       var deferred = $q.defer();
-      profile = pick(profile, "mailSyncEnabled",
-        "email", "firstName", "lastName", "telephone", "roles", "status");
+      profile = pick(profile, USER_WRITABLE_FIELDS);
       $log.debug("updateUser called", username, profile);
       coreAPILoader().then(function (coreApi) {
         var request = coreApi.user.patch({

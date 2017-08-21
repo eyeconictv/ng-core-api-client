@@ -5,3 +5,5 @@ reports
 *.iml
 *.log
 
+
+package-lock.json
