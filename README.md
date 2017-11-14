@@ -1,3 +1,7 @@
+## DEPRECATED
+
+Use https://github.com/Rise-Vision/common-header/tree/master/src/js/components/core-api-client
+
 # ng-core-api-client [![Build Status](https://travis-ci.org/Rise-Vision/ng-core-api-client.svg)](https://travis-ci.org/Rise-Vision/ng-core-api-client)
 ## Introduction
 
