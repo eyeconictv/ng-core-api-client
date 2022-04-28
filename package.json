@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rise-Vision/ng-core-api-client"
+    "url": "https://github.com/porcupine-plan/ng-core-api-client"
   },
   "dependencies": {
     "gulp": "~3.9.0",
     "run-sequence": "^1.1.1",
     "gulp-bump": "^0.1.11",
-    "widget-tester": "git://github.com/Rise-Vision/widget-tester.git"
+    "widget-tester": "git://github.com/porcupine-plan/widget-tester.git"
   },
   "devDependencies": {
     "gulp-jshint": "^1.8.4"

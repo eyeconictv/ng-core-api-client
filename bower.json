@@ -13,7 +13,7 @@
     "angular": "~1.5.0",
     "angular-mocks": "~1.5.0",
     "q": "1.0.1",
-    "ng-gapi-loader": "git://github.com/Rise-Vision/ng-gapi-loader.git"
+    "ng-gapi-loader": "git://github.com/porcupine-plan/ng-gapi-loader.git"
   },
   "resolutions": {
     "angular": "~1.5.0",
@@ -23,7 +23,7 @@
     "Xiyang Chen <settinghead@gmail.com>"
   ],
   "license": "GNU GPL",
-  "homepage": "https://github.com/Rise-Vision/ng-core-api-client",
+  "homepage": "https://github.com/porcupine-plan/ng-core-api-client",
   "private": true,
   "ignore": [
     "**/.*",
