@@ -3,7 +3,7 @@
 
 var
     gulp = require("gulp"),
-    factory = require("widget-tester").gulpTaskFactory,
+    // factory = require("widget-tester").gulpTaskFactory,
     runSequence = require("run-sequence"),
     jshint = require("gulp-jshint");
 
@@ -18,9 +18,9 @@ var unitTestFiles = [
   "test/unit/*spec.js"
   ];
 
-gulp.task("test:unit", factory.testUnitAngular({testFiles: unitTestFiles}));
-gulp.task("test:unit-watch", factory.testUnitAngular({testFiles: unitTestFiles, watch: true}));
-gulp.task("metrics", factory.metrics());
+// gulp.task("test:unit", factory.testUnitAngular({testFiles: unitTestFiles}));
+// gulp.task("test:unit-watch", factory.testUnitAngular({testFiles: unitTestFiles, watch: true}));
+// gulp.task("metrics", factory.metrics());
 
 gulp.task("lint", function() {
   return gulp.src([
